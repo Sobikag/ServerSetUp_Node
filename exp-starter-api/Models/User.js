@@ -18,5 +18,15 @@ const createdUser = (await query(
         "lastName",
         "email",
         "student",
-        "password",
-    )`))
+        "passwordDigest"
+    )values($1, $2, $3, $4, $5) returning *`,
+    [
+        properties.firstName,
+        properties.lastName,
+        properties.email,
+        properties.student,
+        passwordDigest
+    ]
+)).rows[0];
+
+return createdUser;
