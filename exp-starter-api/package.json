@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --recursive"
+    "build": "SET NODE_ENV=production webpack",
+    "test": "mocha --recursive",
+    "db:migrate": "node postgrator.js",
+    "db:migrate:test": "NODE_ENV=test node postgrator.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.1.0",
@@ -16,6 +20,7 @@
     "mocha": "^5.2.0",
     "morgan": "~1.9.0",
     "pg": "^7.6.1",
+    "postgrator": "^3.7.0",
     "supertest": "^3.3.0"
   }
 }
