@@ -1,5 +1,8 @@
-const query = require('../db/index').query;
+const { Pool } = require('pg');
+const config = require('../dbConfig');
 
-module.exports = async() =>{
-    await query('DELETE FROM "users"');
-};
+const pool = new Pool(config);
+
+module.exports = {
+    query: (text, params) => pool.query(text, params)
+  };

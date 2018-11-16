@@ -1,6 +1,6 @@
 const expect = require('expect');
 
-const User = require('../../Models/User.js');
+const User = require('../../Models/User');
 
 describe('test users', () =>{
     it('should create a user', async() =>{
@@ -13,7 +13,7 @@ describe('test users', () =>{
             email: 'abc@gmail.com',
             student: false,
             password: 'password'
-        })
+        });
 
         const usersAfter = await User.all();
         expect(usersAfter.length).toBe(1);
