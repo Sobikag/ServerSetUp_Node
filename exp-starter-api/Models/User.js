@@ -3,8 +3,8 @@ const query = require('../db/index').query;
 
 module.exports = {
     all: async() =>{
-        const User = (await query('SELECT * FROM "users"')).rows;
-        return User;
+        const user = (await query('SELECT * FROM "users"')).rows;
+        return user;
     },
     create: async properties =>{
         const saltRounds = 10;

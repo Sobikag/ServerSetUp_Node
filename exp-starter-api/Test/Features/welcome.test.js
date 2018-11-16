@@ -5,6 +5,7 @@ const app = require('../../app');
 
 describe('root of API', () =>{
     it('welcomes visitors', async()=>{
+        console.log('hiiiiiiiiiiiiiii');
         const res = await request(app)
             .get('/')
             .expect(200);
