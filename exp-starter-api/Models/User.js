@@ -25,6 +25,8 @@ module.exports = {
             passwordDigest
         ]
     )).rows[0];
+    // console.log("from create function");
+    // console.log("created user", createdUser);
     return createdUser;
     }
 }

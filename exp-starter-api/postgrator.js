@@ -2,11 +2,11 @@ if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
 }
 if(process.env.NODE_ENV === 'test'){
-    console.log('asdfasf')
     process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 }
 
-const postgrator = require('postgrator');
+const path = require('path');
+const Postgrator = require('postgrator');
 
 // postgrator.setConfig({
 //     migrationDirectory : __dirname + '/migrations',
@@ -22,8 +22,8 @@ const postgrator = require('postgrator');
 //     password: 'root'
 // })
 
-const postgrator1 = new postgrator({
-    migrationDirectory : __dirname + '/migrations',
+const postgrator1 = new Postgrator({
+    migrationDirectory : path.join(__dirname + '/migrations'),
     driver: 'pg',
     connectionString: process.env.DATABASE_URL
 });
@@ -33,14 +33,13 @@ const postgrator1 = new postgrator({
 postgrator1.migrate('max', function(err, migrations) {
     if (err) {
       console.log(err);
-    } else {
-      if (migrations) {
+    } else  if (migrations) {
         console.log(
           ['***************************************']
             .concat(migrations.map(migration => `checking ${migration.filename}`))
             .join('\n')
         );
       }
-    }
+    // }
     postgrator1.endConnection(() => {});
   });

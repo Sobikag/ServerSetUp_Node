@@ -1,10 +1,11 @@
+const request = require('supertest');
 const expect = require('expect');
 
 const User = require('../../models/User');
 
 describe('test users', () =>{
     it('should create a user', async() =>{
-        console.log("hiiiiiiiiiiiiiii");
+        // console.log("hiiiiiiiiiiiiiii");
         const usersBefore = await User.all();
         expect(usersBefore.length).toBe(0);
 
