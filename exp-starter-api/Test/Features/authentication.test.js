@@ -1,10 +1,11 @@
 const expect = require('expect');
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
 require('../helper');
 
 const app = require('../../app');
-
-const User = require('../../models/user')
+const User = require('../../models/user');
+const serializedUser = require('../../serializers/users');
 
 describe('User Authentication', () => {
   it('users can log in and receive a JWT', async () => {
@@ -18,16 +19,13 @@ describe('User Authentication', () => {
 
     const user = await User.create(userParams);
 
-    // const email = 'abcdef@gmk.com';
-    // const password = 'password';
-
     const res = await request(app)
     .post('/login')
     .send({ email: 'abcdef@gmk.com', password: 'password' })
     .expect(200);
     // console.log("res..............",res);
     expect(res.body.jwt).not.toBe(undefined);
-    console.log("res.body.jwt.......",res.body.jwt);
+    // console.log("res.body.jwt.......",res.body.jwt);
     expect(res.body.user).toEqual({
       id: user.id,
       firstName: user.firstName,
@@ -39,4 +37,22 @@ describe('User Authentication', () => {
     expect(res.body.user.createdAt).toEqual(undefined);
     expect(res.body.user.updatedAt).toEqual(undefined);
   });
+
+  it('can be listed for a logged in user', async() =>{
+    const user = await User.create({
+      firstName: 'Sobika',
+      lastName: 'G',
+      email: 'abcdef@gmk.com',
+      student: true,
+      password: 'password',
+    });
+
+    const userSerializer = await serializedUser(user);
+    const token = jwt.sign({ user: userSerializer }, process.env.JWT_SECRET);
+
+    const resNotLoggedIn = await request(app)
+      .get('/users')
+      .expect(404);
+    expect(resNotLoggedIn.body).toEqual({ message: 'Not Found', error: { message: 'Not Found' } });
+  })
 });

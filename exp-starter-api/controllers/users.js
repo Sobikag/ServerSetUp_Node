@@ -5,7 +5,7 @@ const userSerializer = require('../serializers/users');
 // console.log("........",userSerializer);
 
 module.exports = {
-    create: async (req, res, next) => {
+    create: async (req, res) => {
         const user = await User.create(req.body);
         // console.log("user controller", user);
         if (user.errors) {
