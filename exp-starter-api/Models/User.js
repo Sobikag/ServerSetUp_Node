@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const query = require('../db/index').query;
+
+const userSerializer = require('../serializers/users');
 
 module.exports = {
     all: async() =>{
@@ -28,7 +31,30 @@ module.exports = {
     // console.log("from create function");
     // console.log("created user", createdUser);
     return createdUser;
+    },
+
+    authenticate: async credentials =>{
+        const user = (await query('SELECT * FROM "users" WHERE "email" = ($1)', [
+            credentials.email,
+        ])).rows[0];
+
+
+        const valid = user? await bcrypt.compare(credentials.password, user.passwordDigest): false;
+        if(valid){
+            const serializedUser = await userSerializer(user);
+            const token = jwt.sign({ user: serializedUser }, process.env.JWT_SECRET);
+            return { jwt: token, user: serializedUser };
+        }else{
+            return {errors: ['Email or Password is Incorrect']};
+        }
     }
+
+
+
+
+
+
+
 }
 
 
