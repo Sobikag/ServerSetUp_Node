@@ -20,4 +20,16 @@ describe('test users', () =>{
         const usersAfter = await User.all();
         expect(usersAfter.length).toBe(1);
     });
+
+    it('can be found by property', async() =>{
+        const user =    await User.create({
+            firstName: 'Sobika',
+            lastName: 'Gangadharan',
+            email: 'abc@gmail.com',
+            student: false,
+            password: 'password'
+        });
+        const foundUser = await User.findBy({ email: 'abc@gmail.com' });
+        expect(foundUser.firstName).toEqual('Sobika');
+    })
 });
