@@ -8,7 +8,7 @@ const User = require('../../models/User');
 describe('User Tests', () =>{
     it('can sign up and receive jwt' , async() =>{
         const res = await request(app)
-        .get('/users')
+        .post('/users')
         .send({
             firstName: 'Sobika',
             lastName: 'Gangadharan',
