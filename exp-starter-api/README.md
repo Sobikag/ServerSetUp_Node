@@ -28,3 +28,5 @@ POSTGRATOR:
 
 BCRYPT:
   bcrypt is a password hashing function(https://www.npmjs.com/package/bcrypt)
+
+PR requst template added
