@@ -54,5 +54,12 @@ describe('User Authentication', () => {
       .get('/users')
       .expect(404);
     expect(resNotLoggedIn.body).toEqual({ message: 'Not Found', error: { message: 'Not Found' } });
+    // console.log("token.....",token);
+    // const resLoggedIn = await request(app)
+    //   .get('/users')
+    //   .set('jwt', token)
+    //   .expect(200);
+      // console.log("user length........",resLoggedIn.body);
+    // expect((resLoggedIn.body).users.length).toBe(1);
   })
 });
